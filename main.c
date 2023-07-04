@@ -17,16 +17,16 @@ typedef struct {
 } Pixel;
 
 // Transformação de imagem para escala de cinza
-void grayScale(int a, int l, Pixel pixels[l][a]) {
+void grayScale(int a, int l, Pixel pixels[a][l]) {
     int i, j;
 
     for(i=0; i<a; i++){
         for(j=0; j<l; j++){
             int gray_value = 0;
-            gray_value = (pixels[j][i].red + pixels[j][i].green + pixels[j][i].blue)/3;
-            pixels[j][i].red = gray_value;
-            pixels[j][i].green = gray_value;
-            pixels[j][i].blue = gray_value;
+            gray_value = (pixels[i][j].red + pixels[i][j].green + pixels[i][j].blue)/3;
+            pixels[i][j].red = gray_value;
+            pixels[i][j].green = gray_value;
+            pixels[i][j].blue = gray_value;
         }
     }
 
@@ -34,9 +34,8 @@ void grayScale(int a, int l, Pixel pixels[l][a]) {
 }
 
 // Função para imprimir arquivo final na pasta output
-void imprime_arquivo(int a, int l, Pixel pixels[l][a], Header header){
+void imprime_arquivo(int a, int l, Pixel pixels[a][l], Header header){
     int i, j;
-    char line[1024];
 
     FILE * out_file;
 
@@ -45,16 +44,16 @@ void imprime_arquivo(int a, int l, Pixel pixels[l][a], Header header){
     if(out_file == NULL){
         printf("Erro ao abrir o arquivo!");
     } else {
-        fprintf(out_file, "%s\n", header.tipo_p, line);
-        fprintf(out_file, "%d %d\n", header.largura, header.altura, line);
-        fprintf(out_file, "%d\n", header.tam_rgb, line);
+        fprintf(out_file, "%s\n", header.tipo_p);
+        fprintf(out_file, "%d %d\n", header.largura, header.altura);
+        fprintf(out_file, "%d\n", header.tam_rgb);
     }
 
     for(i=0; i<a; i++){
         for(j=0; j<l; j++){
-            fprintf(out_file, "%3d %3d %3d ", pixels[j][i].red, pixels[j][i].green, pixels[j][i].blue, line);
+            fprintf(out_file, "%3d %3d %3d ", pixels[i][j].red, pixels[i][j].green, pixels[i][j].blue);
         }
-        fprintf(out_file, "\n", line);
+        fprintf(out_file, "\n");
     }
 
     fclose(out_file);
@@ -81,12 +80,12 @@ int main(){
     fscanf(arquivo, "%d %d\n", &header.largura, &header.altura);
     fscanf(arquivo, "%d\n", &header.tam_rgb);
 
-    Pixel pixels[header.largura][header.altura];
+    Pixel pixels[header.altura][header.largura];
 
     // Leitura da matriz que está no arquivo de acordo com altura e largura.
     for(i=0; i<header.altura; i++){
         for(j=0; j<header.largura; j++){
-            fscanf(arquivo, "%d %d %d", &pixels[j][i].red, &pixels[j][i].green, &pixels[j][i].blue);
+            fscanf(arquivo, "%d %d %d", &pixels[i][j].red, &pixels[i][j].green, &pixels[i][j].blue);
         }
     }
 
