@@ -17,7 +17,7 @@ typedef struct {
 } Pixel;
 
 // Transformação de imagem para escala de cinza
-void grayScale(int a, int l, Pixel pixels[a][l]) {
+void grayScale(int a, int l, Pixel pixels[a][l], Header header) {
     int i, j;
 
     for(i=0; i<a; i++){
@@ -30,6 +30,8 @@ void grayScale(int a, int l, Pixel pixels[a][l]) {
         }
     }
 
+    imprime_arquivo(header.altura, header.largura, pixels, header);
+
     return;
 }
 
@@ -39,7 +41,7 @@ void imprime_arquivo(int a, int l, Pixel pixels[a][l], Header header){
 
     FILE * out_file;
 
-    out_file = fopen("galihons_gray.ppm", "wt");
+    out_file = fopen("galilhos_gray.ppm", "wt");
 
     if(out_file == NULL){
         printf("Erro ao abrir o arquivo!");
@@ -49,8 +51,8 @@ void imprime_arquivo(int a, int l, Pixel pixels[a][l], Header header){
         fprintf(out_file, "%d\n", header.tam_rgb);
     }
 
-    for(i=0; i<a; i++){
-        for(j=0; j<l; j++){
+    for(i=0; i<header.altura; i++){
+        for(j=0; j<header.largura; j++){
             fprintf(out_file, "%3d %3d %3d ", pixels[i][j].red, pixels[i][j].green, pixels[i][j].blue);
         }
         fprintf(out_file, "\n");
@@ -90,8 +92,8 @@ int main(){
     }
 
     fclose(arquivo);
-    grayScale(header.altura, header.largura, pixels);
-    imprime_arquivo(header.altura, header.largura, pixels, header);
+
+    grayScale(header.altura, header.largura, pixels, header);
 
     return 0;
 }

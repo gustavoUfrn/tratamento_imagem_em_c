@@ -21,27 +21,46 @@ void imprime_arquivo(int a, int l, Pixel pixels[a][l], Header header){
 
     FILE * out_file;
 
-    out_file = fopen("galinhos_rot.ppm", "wt");
-    
+    out_file = fopen("galinhos_rotatus.ppm", "wt");
+
     if(out_file == NULL){
         printf("Erro ao abrir o arquivo!");
     } else {
         fprintf(out_file, "%s\n", header.tipo_p);
-        fprintf(out_file, "%d %d\n", header.altura, header.largura);
+        fprintf(out_file, "%d %d\n", header.largura, header.altura);
         fprintf(out_file, "%d\n", header.tam_rgb);
     }
 
-    a = header.largura;
-    l = header.altura;
-
-    for(i=0; i<a; i++){
-        for(j=l-1; j>=0; j--){
-            fprintf(out_file, "%3d %3d %3d ", pixels[j][i].red, pixels[j][i].green, pixels[j][i].blue);
+    for(i=0; i<header.altura; i++){
+        for(j=0; j<header.largura; j++){
+            fprintf(out_file, "%3d %3d %3d ", pixels[i][j].red, pixels[i][j].green, pixels[i][j].blue);
         }
         fprintf(out_file, "\n");
     }
 
     fclose(out_file);
+
+    return;
+}
+
+void rotate(int a, int l, Pixel pixels[a][l], Header header){
+    int i, j, temp=0;
+
+    Pixel pixels_aux[l][a];
+
+    for (int i = 0; i < a; i++) {
+        for (int j = 0; j < l; j++) {
+            pixels_aux[j][a - 1 - i].red = pixels[i][j].red;
+            pixels_aux[j][a - 1 - i].green = pixels[i][j].green;
+            pixels_aux[j][a - 1 - i].blue = pixels[i][j].blue;
+        }
+    }
+
+    temp = header.altura;
+    header.altura = header.largura;
+    header.largura = temp;
+
+    imprime_arquivo(header.altura, header.largura, pixels_aux, header);
 
     return;
 }
@@ -73,7 +92,8 @@ int main(){
     }
 
     fclose(arquivo);
-    imprime_arquivo(header.altura, header.largura, pixels, header);
+
+    rotate(header.altura, header.largura, pixels, header);
 
     return 0;
 }
