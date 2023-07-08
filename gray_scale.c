@@ -16,26 +16,6 @@ typedef struct {
     int blue;
 } Pixel;
 
-// Transformação de imagem para escala de cinza
-void grayScale(int a, int l, Pixel pixels[a][l], Header header) {
-    int i, j;
-
-    for(i=0; i<a; i++){
-        for(j=0; j<l; j++){
-            int gray_value = 0;
-            gray_value = (pixels[i][j].red + pixels[i][j].green + pixels[i][j].blue)/3;
-            pixels[i][j].red = gray_value;
-            pixels[i][j].green = gray_value;
-            pixels[i][j].blue = gray_value;
-        }
-    }
-
-    imprime_arquivo(header.altura, header.largura, pixels, header);
-
-    return;
-}
-
-// Função para imprimir arquivo final na pasta output
 void imprime_arquivo(int a, int l, Pixel pixels[a][l], Header header){
     int i, j;
 
@@ -63,6 +43,26 @@ void imprime_arquivo(int a, int l, Pixel pixels[a][l], Header header){
     return;
 }
 
+// Transformação de imagem para escala de cinza
+void grayScale(int a, int l, Pixel pixels[a][l], Header header) {
+    int i, j;
+
+    for(i=0; i<a; i++){
+        for(j=0; j<l; j++){
+            int gray_value = 0;
+            gray_value = (pixels[i][j].red + pixels[i][j].green + pixels[i][j].blue)/3;
+            pixels[i][j].red = gray_value;
+            pixels[i][j].green = gray_value;
+            pixels[i][j].blue = gray_value;
+        }
+    }
+
+    imprime_arquivo(header.altura, header.largura, pixels, header);
+
+    return;
+}
+
+// Função para imprimir arquivo final na pasta output
 // Função main, atualmente está preenchida com a leitura do arquivo, declaração de alguns tipos
 // Funções atuais: Chamar função para gerar arquivo final e função para transformação em escala de cinza
 int main(){
