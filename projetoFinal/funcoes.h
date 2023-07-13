@@ -11,6 +11,8 @@ void grayScale(ptn_header Header);
 
 void blur(ptn_header Header);
 
+void ampliar(ptn_header Header);
+
 void imprime_arquivo(ptn_header Header);
 
 
