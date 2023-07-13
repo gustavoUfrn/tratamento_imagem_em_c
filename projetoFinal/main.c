@@ -9,6 +9,7 @@ int main(){
     // grayScale(&Header);
     // blur(&Header);
     //ampliar(&Header);
+    // reduzir(&Header);
 
     imprime_arquivo(&Header);
 

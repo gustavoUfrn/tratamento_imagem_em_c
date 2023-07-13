@@ -158,6 +158,29 @@ void ampliar(ptn_header Header){
     Header->pixel_img = Header_aux.pixel_img;
 }
 
+void reduzir(ptn_header Header){
+
+    header Header_aux;
+
+    Header_aux.altura = Header->altura/2;
+    Header_aux.largura = Header->largura/2;
+    MatrizPixels(&Header_aux);
+
+    Header->altura = Header_aux.altura;
+    Header->largura = Header_aux.largura;
+
+    for(int i=0; i< Header->altura; i++){
+        for(int j=0; j< Header->largura; j++){
+            Header_aux.pixel_img[i][j].red = (Header->pixel_img[i*2][j*2].red + Header->pixel_img[i*2+1][j*2].red + Header->pixel_img[i*2][j*2+1].red + Header->pixel_img[i*2+1][j*2+1].red)/4;
+            Header_aux.pixel_img[i][j].green = (Header->pixel_img[i*2][j*2].green + Header->pixel_img[i*2+1][j*2].green + Header->pixel_img[i*2][j*2+1].green + Header->pixel_img[i*2+1][j*2+1].green)/4;
+            Header_aux.pixel_img[i][j].blue = (Header->pixel_img[i*2][j*2].blue + Header->pixel_img[i*2+1][j*2].blue + Header->pixel_img[i*2][j*2+1].blue + Header->pixel_img[i*2+1][j*2+1].blue)/4;
+        }
+    }
+    
+    free(Header->pixel_img);
+    Header->pixel_img = Header_aux.pixel_img;
+}
+
 void imprime_arquivo(ptn_header Header){
     int i, j;
 

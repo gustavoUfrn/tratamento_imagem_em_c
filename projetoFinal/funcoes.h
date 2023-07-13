@@ -13,6 +13,8 @@ void blur(ptn_header Header);
 
 void ampliar(ptn_header Header);
 
+void reduzir(ptn_header Header);
+
 void imprime_arquivo(ptn_header Header);
 
 
