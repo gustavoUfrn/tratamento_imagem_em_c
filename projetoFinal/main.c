@@ -6,7 +6,9 @@ int main(){
 
     lerImagem(&Header);
 
-    grayScale(&Header);
+    // grayScale(&Header);
+
+    blur(&Header);
 
     imprime_arquivo(&Header);
 

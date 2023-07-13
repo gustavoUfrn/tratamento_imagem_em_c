@@ -51,6 +51,49 @@ void grayScale(ptn_header Header) {
     return;
 }
 
+void blur(ptn_header Header){
+    int media_red, media_green, media_blue;
+    header Header_aux;    
+
+    Header_aux.altura = Header->altura;
+    Header_aux.largura = Header->largura;
+
+    MatrizPixels(&Header_aux);
+
+    for(int i=0; i<Header->altura; i++){
+        for(int j=0; j<Header->largura; j++){
+            if((i!=0 && j!=0) && (i!=(Header->altura)-1 && j!=(Header->largura)-1)){
+                //Lógica para red
+                media_red = (Header->pixel_img[i-1][j-1].red + Header->pixel_img[i-1][j].red + Header->pixel_img[i-1][j+1].red +
+                              Header->pixel_img[i][j-1].red + Header->pixel_img[i][j].red + Header->pixel_img[i][j+1].red + 
+                               Header->pixel_img[i+1][j-1].red + Header->pixel_img[i+1][j].red + Header->pixel_img[i+1][j+1].red)/9;
+                //Lógica para green
+                media_green = (Header->pixel_img[i-1][j-1].green + Header->pixel_img[i-1][j].green + Header->pixel_img[i-1][j+1].green +
+                                Header->pixel_img[i][j-1].green + Header->pixel_img[i][j].green + Header->pixel_img[i][j+1].green + 
+                                 Header->pixel_img[i+1][j-1].green + Header->pixel_img[i+1][j].green + Header->pixel_img[i+1][j+1].green)/9;
+                //Lógica para blue
+                media_blue = (Header->pixel_img[i-1][j-1].blue + Header->pixel_img[i-1][j].blue + Header->pixel_img[i-1][j+1].blue +
+                                Header->pixel_img[i][j-1].blue + Header->pixel_img[i][j].blue + Header->pixel_img[i][j+1].blue + 
+                                 Header->pixel_img[i+1][j-1].blue + Header->pixel_img[i+1][j].blue + Header->pixel_img[i+1][j+1].blue)/9;
+                          
+                for(int o=i-1; o<Header->altura; o++){
+                    for(int p=j-1; p<Header->largura; p++){
+                        Header_aux.pixel_img[o][p].red = media_red;
+                        Header_aux.pixel_img[o][p].green = media_green;
+                        Header_aux.pixel_img[o][p].blue = media_blue;
+                    }
+                }
+            }
+            media_red=0;
+            media_green=0;
+            media_blue=0;
+        }
+    }
+
+    free(Header->pixel_img);
+    Header->pixel_img = Header_aux.pixel_img;
+}
+
 void imprime_arquivo(ptn_header Header){
     int i, j;
 
