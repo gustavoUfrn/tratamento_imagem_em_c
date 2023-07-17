@@ -13,7 +13,7 @@ void lerImagem(ptn_header Header){
     int i, j;
     FILE *arquivo;
 
-    arquivo = fopen("galinhos.ppm", "rt");
+    arquivo = fopen("imgs/reduzir.ppm", "rt");
 
     if(arquivo == NULL){
         printf("Erro ao ler arquivo!\n");
@@ -34,6 +34,31 @@ void lerImagem(ptn_header Header){
 
     fclose(arquivo);
 }
+
+char* lerArgumentos(int pnt_int, char **pnt_char){
+    int i=1;
+
+    if(pnt_int == 1){
+        printf("Você não está passando nenhum argumento! Operações: rotate, blur, gray_scale...\n");
+    } else {
+        for(i; i<pnt_int; i++){            
+            return pnt_char[i];
+        }
+    }
+};
+
+void operacao(char* Operacao, ptn_header Header){
+
+    if( strcmp(Operacao, "gray_scale") == 0){
+        grayScale(Header);
+    } else if( strcmp(Operacao, "blur") == 0){
+        blur(Header);
+    } else if( strcmp(Operacao, "ampliar") == 0){
+        ampliar(Header);
+    } else if( strcmp(Operacao, "reduzir") == 0){
+        reduzir(Header);
+    }
+};
 
 void grayScale(ptn_header Header) {
     int i, j;
@@ -181,12 +206,17 @@ void reduzir(ptn_header Header){
     Header->pixel_img = Header_aux.pixel_img;
 }
 
-void imprime_arquivo(ptn_header Header){
+void imprime_arquivo(char* Operacao, ptn_header Header){
     int i, j;
+
+    char str_pre_entrada[50] = "imgs/";
+    char str_pre_entrada_2[5] = ".ppm";
+    strcat(str_pre_entrada, Operacao);
+    strcat(str_pre_entrada, str_pre_entrada_2);
 
     FILE *out_file;
 
-    out_file = fopen("galilhos_blur.ppm", "wt");
+    out_file = fopen(str_pre_entrada, "wt");
 
     if(out_file == NULL){
         printf("Erro ao abrir o arquivo!");
