@@ -24,11 +24,11 @@ Antes da main usamos ``#include "funcoes.h"`` que irá chamar o arquivo onde as 
 O main será responsavel por chamar as funções de leitura de arquivo, impressão de arquivo e escolha de operação.
 O argumento receberá o nome da transformação que será usada, estas estão listadas a seguir:
 
--*gray*: Cria uma nova imagem em escala de cinza;
--*enlarge*: Amplia a imagem em 2x;
--*reduce*: Reduz a imagem em 2x;
--*blur*: Cria uma nova imagem com a nitidez reduzida;
--*rotate*:  Rotaciona a imagem 90° em sentido anit-hórario;
+- *gray*: Cria uma nova imagem em escala de cinza;
+- *enlarge*: Amplia a imagem em 2x;
+- *reduce*: Reduz a imagem em 2x;
+- *blur*: Cria uma nova imagem com a nitidez reduzida;
+- *rotate*:  Rotaciona a imagem 90° em sentido anit-hórario;
 ### Funcoes.h
 O arquivo funcoes.h normalmente é responsavel por conter as declarações de tipos das funções. Além de fazer a chamada dos recursos básicos do código, como importação de bibliotecas e por isso também importará ``#include "structs.h"``
 ### Funcoes.c
