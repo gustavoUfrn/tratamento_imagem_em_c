@@ -38,27 +38,23 @@ char* ler_argumentos(int pnt_int, char **pnt_char){
         printf("Seu argumento esta digitado incorretamente! Passe um dos argumentos: ");
     }
 };
-// Comando principal de entrada de dados. É com essa função que determina qual efeito será aplicado na imagem.
 
 void operacao(char* Operacao, ptn_header Header){
 
-    if( strcmp(Operacao, "gray_scale") == 0){
-        grayScale(Header);
-    } else if( strcmp(Operacao, "blur") == 0){
-        blur(Header);
-    } else if( strcmp(Operacao, "ampliar") == 0){
-        ampliar(Header);
-    } else if( strcmp(Operacao, "reduzir") == 0){
-        reduzir(Header);
+    if( strcmp(Operacao, "gray") == 0){
+        gray(Header);
     } else if( strcmp(Operacao, "rotate") == 0){
         rotate(Header);
+    } else if( strcmp(Operacao, "blur") == 0){
+        blur(Header);
+    } else if( strcmp(Operacao, "enlarge") == 0){
+        enlarge(Header);
+    } else if( strcmp(Operacao, "reduce") == 0){
+        reduce(Header);
     }
 };
-// //  Código para transfomrar a imagem em uma de escala cinza: dentro do loop aninhado, a função itera sobre cada pixel da imagem. Para cada pixel, é calculada a média dos valores de vermelho, 
-verde e azul. Essa média é armazenada em uma variável chamada media. Em seguida, os valores de vermelho, verde e azul do pixel são atualizados para 
-o valor da média calculada, o que resulta em uma imagem em escala de cinza.
 
-void grayScale(ptn_header Header) {
+void gray(ptn_header Header) {
     int i, j;
 
     for(i=0; i<Header->altura; i++){
@@ -142,7 +138,7 @@ void blur(ptn_header Header){
     Header->pixel_img = Header_aux.pixel_img;
 }
 
-void ampliar(ptn_header Header){
+void enlarge(ptn_header Header){
     int altura_ampliada = Header->altura + (Header->altura-1);
     int largura_ampliada = Header->largura + (Header->largura-1);
 
@@ -206,7 +202,7 @@ void ampliar(ptn_header Header){
     Header->pixel_img = Header_aux.pixel_img;
 }
 
-void reduzir(ptn_header Header){
+void reduce(ptn_header Header){
 
     header Header_aux;
 
