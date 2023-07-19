@@ -1,5 +1,6 @@
 #include "funcoes.h"
 
+//Aloca a matriz da imagem. 
 void MatrizPixels(ptn_header Header){
     int i;
 
