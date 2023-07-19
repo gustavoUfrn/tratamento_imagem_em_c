@@ -9,41 +9,32 @@ void MatrizPixels(ptn_header Header){
 	}
 }
 
-void lerImagem(ptn_header Header){
+void ler_arquivo(ptn_header Header){
     int i, j;
-    FILE *arquivo;
-
-    arquivo = fopen("imgs/reduzir.ppm", "rt");
-
-    if(arquivo == NULL){
-        printf("Erro ao ler arquivo!\n");
-    }
-
-    fscanf(arquivo, "%s\n", Header->p);
-    fscanf(arquivo, "%d %d\n", &Header->largura, &Header->altura);
-    fscanf(arquivo, "%d\n", &Header->tam_rgb);
+    
+    scanf("%s\n", Header->p);
+    scanf("%d %d\n", &Header->largura, &Header->altura);
+    scanf("%d\n", &Header->tam_rgb);
 
     MatrizPixels(Header);    
 
     // Leitura da matriz que está no arquivo de acordo com altura e largura.
     for(i=0; i<Header->altura; i++){
         for(j=0; j<Header->largura; j++){
-            fscanf(arquivo, "%d %d %d", &Header->pixel_img[i][j].red, &Header->pixel_img[i][j].green, &Header->pixel_img[i][j].blue);
+            scanf("%d %d %d", &Header->pixel_img[i][j].red, &Header->pixel_img[i][j].green, &Header->pixel_img[i][j].blue);
         }
     }
 
-    fclose(arquivo);
+    return;
 }
 
 char* lerArgumentos(int pnt_int, char **pnt_char){
     int i=1;
 
-    if(pnt_int == 1){
-        printf("Você não está passando nenhum argumento! Operações: rotate, blur, gray_scale...\n");
+    if(pnt_int == 2){      
+        return pnt_char[1];
     } else {
-        for(i; i<pnt_int; i++){            
-            return pnt_char[i];
-        }
+        printf("Seu argumento esta digitado incorretamente! Passe um dos argumentos: ");
     }
 };
 
@@ -57,6 +48,8 @@ void operacao(char* Operacao, ptn_header Header){
         ampliar(Header);
     } else if( strcmp(Operacao, "reduzir") == 0){
         reduzir(Header);
+    } else if( strcmp(Operacao, "rotate") == 0){
+        rotate(Header);
     }
 };
 
@@ -74,6 +67,31 @@ void grayScale(ptn_header Header) {
     }
 
     return;
+}
+
+void rotate(ptn_header Header){
+    int i, j;
+
+    header Header_aux;
+    
+    Header_aux.altura = Header->largura;
+    Header_aux.largura = Header->altura;
+
+    MatrizPixels(&Header_aux);
+
+    for (i = 0; i <  Header->altura; i++) {
+        for (j = 0; j < Header->largura; j++) {
+            Header_aux.pixel_img[j][Header->altura - 1 - i].red = Header->pixel_img[i][j].red;
+            Header_aux.pixel_img[j][Header->altura - 1 - i].green = Header->pixel_img[i][j].green;
+            Header_aux.pixel_img[j][Header->altura - 1 - i].blue = Header->pixel_img[i][j].blue;
+        }
+    }
+
+    Header->altura = Header_aux.altura;
+    Header->largura = Header_aux.largura;
+
+    free(Header->pixel_img);
+    Header->pixel_img = Header_aux.pixel_img;
 }
 
 void blur(ptn_header Header){
@@ -206,37 +224,21 @@ void reduzir(ptn_header Header){
     Header->pixel_img = Header_aux.pixel_img;
 }
 
-void imprime_arquivo(char* Operacao, ptn_header Header){
+void imprime_arquivo(ptn_header Header){
     int i, j;
 
-    char str_pre_entrada[50] = "imgs/";
-    char str_pre_entrada_2[5] = ".ppm";
-    strcat(str_pre_entrada, Operacao);
-    strcat(str_pre_entrada, str_pre_entrada_2);
-
-    FILE *out_file;
-
-    out_file = fopen(str_pre_entrada, "wt");
-
-    if(out_file == NULL){
-        printf("Erro ao abrir o arquivo!");
-        return;
-    }
-
-    fprintf(out_file, "%s\n", Header->p);
-    fprintf(out_file, "%d %d\n", Header->largura, Header->altura);
-    fprintf(out_file, "%d\n", Header->tam_rgb);
+    printf("%s\n", Header->p);
+    printf("%d %d\n", Header->largura, Header->altura);
+    printf("%d\n", Header->tam_rgb);
 
     for(i=0; i<Header->altura; i++){
         for(j=0; j<Header->largura; j++){
-            fprintf(out_file, "%3d %3d %3d ", Header->pixel_img[i][j].red, 
+            printf("%3d %3d %3d ", Header->pixel_img[i][j].red, 
                                                 Header->pixel_img[i][j].green, 
                                                     Header->pixel_img[i][j].blue);
         }
-        fprintf(out_file, "\n");
+        printf("\n");
     }
-
-    fclose(out_file);
 
     free(Header->pixel_img);
 }

@@ -1,4 +1,3 @@
-
 typedef struct {
     int red, green, blue;
 } Pixel;
