@@ -28,7 +28,7 @@ void ler_arquivo(ptn_header Header){
     return;
 }
 
-char* lerArgumentos(int pnt_int, char **pnt_char){
+char* ler_argumentos(int pnt_int, char **pnt_char){
     int i=1;
 
     if(pnt_int == 2){      

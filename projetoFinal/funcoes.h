@@ -7,7 +7,7 @@ void MatrizPixels(ptn_header Header);
 
 void ler_arquivo(ptn_header Header);
 
-char* lerArgumentos(int pnt_int, char **pnt_char);
+char* ler_argumentos(int pnt_int, char **pnt_char);
 
 void operacao(char* Operacao, ptn_header Header);
 
