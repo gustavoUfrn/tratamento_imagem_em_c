@@ -2,7 +2,7 @@
 ## Sobre o projeto
 **Este projeto foi criado com intuito de avaliar o aprendizado dos alunos da turma de IMD1012 - Introdução às técnicas de programação - T02 (2023.1).**
 
-*Alunos: Gustavo Alessandro de Oliveira Araujo - 20220075070*
+*Alunos: Gustavo Alessandro de Oliveira Araujo - 20220075070 e Ewerton Luan Carvalho Silva - 20220043183*
 
 O template e críterios avaliativo pode ser encontrado no link a seguir: https://github.com/dimap-ufrn/itp-p1#representações-de-imagens-através-de-bitmaps
 Também é possivel ler mais sobre os detalhes do projeto, como processamento de imagens e suas representações e sobre os formatos de imagem ppm e como modifica-lo.
