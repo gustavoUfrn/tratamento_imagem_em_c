@@ -1,5 +1,6 @@
 #include "funcoes.h"
 
+//Aloca a matriz da imagem. 
 void MatrizPixels(ptn_header Header){
     int i;
 
@@ -37,6 +38,7 @@ char* ler_argumentos(int pnt_int, char **pnt_char){
         printf("Seu argumento esta digitado incorretamente! Passe um dos argumentos: ");
     }
 };
+// Comando principal de entrada de dados. É com essa função que determina qual efeito será aplicado na imagem.
 
 void operacao(char* Operacao, ptn_header Header){
 
@@ -52,6 +54,9 @@ void operacao(char* Operacao, ptn_header Header){
         rotate(Header);
     }
 };
+// //  Código para transfomrar a imagem em uma de escala cinza: dentro do loop aninhado, a função itera sobre cada pixel da imagem. Para cada pixel, é calculada a média dos valores de vermelho, 
+verde e azul. Essa média é armazenada em uma variável chamada media. Em seguida, os valores de vermelho, verde e azul do pixel são atualizados para 
+o valor da média calculada, o que resulta em uma imagem em escala de cinza.
 
 void grayScale(ptn_header Header) {
     int i, j;
