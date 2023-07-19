@@ -7,7 +7,7 @@
 O template e críterios avaliativo pode ser encontrado no link a seguir: https://github.com/dimap-ufrn/itp-p1#representações-de-imagens-através-de-bitmaps. Neste link também é possivel ler mais sobre os detalhes do projeto, como processamento de imagens e suas representações e sobre os formatos de imagem ppm e como modifica-lo.
 # Funcionamento do programa
 ### Entrada de dados, saída de dados e argumentos
-O projeto usa a entrada e saída padrão de dados, e precisa de uma argumento que será usado para selecionar a operação. Um exemplos que como podemos usar: 
+O projeto usa a entrada e saída padrão de dados, e precisa de uma argumento que será usado para selecionar a operação. Um exemplos de como podemos usar: 
 
 ``./nomeProjeto rotate < imgs/galinhos.ppm > imgs/rotate.ppm``
 
