@@ -53,7 +53,7 @@ void operacao(char* Operacao, ptn_header Header){
     } else if( strcmp(Operacao, "reduce") == 0){
         reduce(Header);
     } else if( strcmp(Operacao, "sharp") == 0){
-        sharpening(Header);
+        //sharpening(Header);
     }
 };
 
