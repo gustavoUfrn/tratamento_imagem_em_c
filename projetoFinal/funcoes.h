@@ -26,7 +26,7 @@ void rotate(ptn_header Header);
 // blur: Cria uma nova imagem com a nitidez reduzida;
 void blur(ptn_header Header);
 
-void sharpening(ptn_header Header);
+// void sharpening(ptn_header Header);
 
 // enlarge: Amplia a imagem em 2x;
 void enlarge(ptn_header Header);

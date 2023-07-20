@@ -141,49 +141,6 @@ void blur(ptn_header Header){
     Header->pixel_img = Header_aux.pixel_img;
 }
 
-void sharpening(ptn_header Header) {
-    int media_red, media_green, media_blue;
-    ptn_header Header_aux;
-
-    Header_aux.altura = Header->altura;
-    Header_aux.largura = Header->largura;
-
-    matriz_pixels(&Header_aux);
-
-    for (int i = 1; i < Header->altura - 1; i++) {
-        for (int j = 1; j < Header->largura - 1; j++) {
-            // Lógica para red
-            media_red = (9 * Header->pixel_img[i][j].red) - (Header->pixel_img[i-1][j-1].red + Header->pixel_img[i-1][j].red + Header->pixel_img[i-1][j+1].red +
-                           Header->pixel_img[i][j-1].red + Header->pixel_img[i][j+1].red +
-                           Header->pixel_img[i+1][j-1].red + Header->pixel_img[i+1][j].red + Header->pixel_img[i+1][j+1].red);
-            // Lógica para green
-            media_green = (9 * Header->pixel_img[i][j].green) - (Header->pixel_img[i-1][j-1].green + Header->pixel_img[i-1][j].green + Header->pixel_img[i-1][j+1].green +
-                             Header->pixel_img[i][j-1].green + Header->pixel_img[i][j+1].green +
-                             Header->pixel_img[i+1][j-1].green + Header->pixel_img[i+1][j].green + Header->pixel_img[i+1][j+1].green);
-            // Lógica para blue
-            media_blue = (9 * Header->pixel_img[i][j].blue) - (Header->pixel_img[i-1][j-1].blue + Header->pixel_img[i-1][j].blue + Header->pixel_img[i-1][j+1].blue +
-                            Header->pixel_img[i][j-1].blue + Header->pixel_img[i][j+1].blue +
-                            Header->pixel_img[i+1][j-1].blue + Header->pixel_img[i+1][j].blue + Header->pixel_img[i+1][j+1].blue);
-
-            // Aplicar o valor calculado no pixel correspondente da matriz auxiliar
-            Header_aux.pixel_img[i][j].red = clamp(Header->pixel_img[i][j].red + media_red, 0, 255);
-            Header_aux.pixel_img[i][j].green = clamp(Header->pixel_img[i][j].green + media_green, 0, 255);
-            Header_aux.pixel_img[i][j].blue = clamp(Header->pixel_img[i][j].blue + media_blue, 0, 255);
-        }
-    }
-
-    // Copiar os valores da matriz auxiliar para a matriz original
-    for (int i = 1; i < Header->altura - 1; i++) {
-        for (int j = 1; j < Header->largura - 1; j++) {
-            Header->pixel_img[i][j].red = Header_aux.pixel_img[i][j].red;
-            Header->pixel_img[i][j].green = Header_aux.pixel_img[i][j].green;
-            Header->pixel_img[i][j].blue = Header_aux.pixel_img[i][j].blue;
-        }
-    }
-
-    free(Header_aux.pixel_img);
-}
-
 void enlarge(ptn_header Header){
     int altura_ampliada = Header->altura + (Header->altura-1);
     int largura_ampliada = Header->largura + (Header->largura-1);
