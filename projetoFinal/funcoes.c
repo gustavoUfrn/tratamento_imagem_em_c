@@ -1,7 +1,7 @@
 #include "funcoes.h"
 
 //Aloca a matriz da imagem. 
-void MatrizPixels(ptn_header Header){
+void matriz_pixels(ptn_header Header){
     int i;
 
 	Header->pixel_img = (Pixel**)malloc(Header->altura * sizeof(Pixel*));
@@ -17,7 +17,7 @@ void ler_arquivo(ptn_header Header){
     scanf("%d %d\n", &Header->largura, &Header->altura);
     scanf("%d\n", &Header->tam_rgb);
 
-    MatrizPixels(Header);    
+    matriz_pixels(Header);    
 
     // Leitura da matriz que está no arquivo de acordo com altura e largura.
     for(i=0; i<Header->altura; i++){
@@ -80,7 +80,7 @@ void rotate(ptn_header Header){
     Header_aux.altura = Header->largura;
     Header_aux.largura = Header->altura;
 
-    MatrizPixels(&Header_aux);
+    matriz_pixels(&Header_aux);
 
     for (i = 0; i <  Header->altura; i++) {
         for (j = 0; j < Header->largura; j++) {
@@ -104,7 +104,7 @@ void blur(ptn_header Header){
     Header_aux.altura = Header->altura;
     Header_aux.largura = Header->largura;
 
-    MatrizPixels(&Header_aux);
+    matriz_pixels(&Header_aux);
 
     for(int i=0; i<Header->altura; i++){
         for(int j=0; j<Header->largura; j++){
@@ -148,7 +148,7 @@ void sharpening(ptn_header Header) {
     Header_aux.altura = Header->altura;
     Header_aux.largura = Header->largura;
 
-    MatrizPixels(&Header_aux);
+    matriz_pixels(&Header_aux);
 
     for (int i = 1; i < Header->altura - 1; i++) {
         for (int j = 1; j < Header->largura - 1; j++) {
@@ -192,7 +192,7 @@ void enlarge(ptn_header Header){
 
     Header_aux.altura = altura_ampliada;
     Header_aux.largura = largura_ampliada;
-    MatrizPixels(&Header_aux);
+    matriz_pixels(&Header_aux);
 
     for (int i = 0; i < altura_ampliada; i++){
         for (int j = 0; j < largura_ampliada; j++){
@@ -254,7 +254,7 @@ void reduce(ptn_header Header){
 
     Header_aux.altura = Header->altura/2;
     Header_aux.largura = Header->largura/2;
-    MatrizPixels(&Header_aux);
+    matriz_pixels(&Header_aux);
 
     Header->altura = Header_aux.altura;
     Header->largura = Header_aux.largura;

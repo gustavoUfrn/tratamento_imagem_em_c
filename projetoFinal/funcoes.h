@@ -5,7 +5,7 @@
 #include "structs.h"
 
 // Aloca uma matriz com base na altura e largura do Header
-void MatrizPixels(ptn_header Header);
+void matriz_pixels(ptn_header Header);
 
 // Ler o arquivo com leitura padrão, cria um Header com os dados lidos e chama a MatrizPixels para fazer a primeria alocação da matriz de Pixels
 void ler_arquivo(ptn_header Header);
