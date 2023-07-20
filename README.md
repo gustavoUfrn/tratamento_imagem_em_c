@@ -101,49 +101,26 @@ Para finalizar, atualizamos os valores de ``Header_aux.pixel_img`` usando um ``f
 ### sharpening
 A função sharpening ainda não foi implementada.
 ### enlarge
-A função enlarge primeiramente amplia a altura e largura da matriz que é passada. Para realizar o cálculo necessário basta multiplicar a matriz por 2 e diminuir em 1: ``Header->altura + (Header->altura-1)``. Em seguida precisamos zerar o Header_aux que será criado com base nos novos valores de altura e largura.
+A função enlarge primeiramente amplia a altura e largura da matriz da estrutura de dados que é passado como parâmetro. Para realizar o cálculo necessário basta multiplicar a matriz por 2 e diminuir em 1: ``Header->altura + (Header->altura-1)``. Em seguida precisamos zerar o Header_aux que será criado com base nos novos valores de altura e largura.
 
-Logo após, precisamos preencher Header_aux com os valores da matriz anterior entre zeros, note que: uma matriz 2x3 vira 3x5 e os valores são distribuídos entre zeros:
-1 2 3
-3 4 5
-
-1 0 2 0 3
-0 0 0 0 0
-3 0 4 0 5
+Ao criar uma variavel Header_aux que precisaremos para alocar a nova matriz aumentada, usamos os valores da matriz anterior para gerar uma matriz onde os valores da velha serçao separados em linhas e colunas por zeros.
 
 Para que isso aconteça basta percorrer a matriz com os valores iniciais de altura e largura, multiplicá-los por dois e salva-los na nova matriz: ``Header_aux.pixel_img[i*2][j*2] = Header->pixel_img[i][j]``
 
-O próximo ``for`` percorre a matriz com altura_ampliada e largura_ampliada, usando três if para preencher os zeros que ainda restam nas matrizes.
+A partir dai o próximo ``for`` percorre a matriz com altura_ampliada e largura_ampliada, usando três if para preencher os zeros que ainda restam nas matrizes.
 
 - O primeiro ``if`` faz o cálculo da linha i, modificando o 0 para uma média dos seus valorres adjacentes;
-1 1 2 2 3
-0 0 0 0 0
-3 3 4 4 5
-
 - O segundo ``if`` faz o cálculo da linha j, modificando o 0 para uma média entre os valores que estão acima e abaixo.
-1 1 2 2 3
-1 0 3 0 4
-3 3 4 4 5
-
 - O terceiro``if`` faz o cálculo dos zeros que sobraram, modificando-o para uma média entre os valores adjacentes, acima e abaixo.
-1 1 2 2 3
-1 2 3 7 4
-3 3 4 4 5
 
 E novamente podemos repassar os dados que estão em Header_aux para Header, incluindo altura, largura e a parte alocada em Header_aux.pixel_img.
 ### reduce
 A função reduce tem como base também a função enlarge, porém algumas lógicas são diferentes.
-Para entender como reduce funciona, pense como exemplo a matriz 4x4 a seguir:
-2 3 5 6
-4 5 7 8
-1 2 8 8
-3 4 8 8
-
-Ao separar (2,3,4,5) formamos uma média, (5,6,7,8) formam a segunda média, seguindo a lógica teremos a matriz final sendo uma matriz 2x2:
-3 6
-2 8
+Para entender como reduce funciona, pense como exemplo a matriz 4x4 ira gerar uma matriz 2x2, e que os valores são usados como médias para formar a nova base.
 
 O código ``Header_aux.pixel_img[i][j] = (Header->pixel_img[i*2][j*2] + Header->pixel_img[i*2+1][j*2] + Header->pixel_img[i*2][j*2+1] + Header->pixel_img[i*2+1][j*2+1])/4;`` é responsável pela lógica de redução da matriz.
+
+Ao usar ``Header->pixel_img[i*2][j*2]`` eu permito que minha matriz pequena alcance o tamanho da matriz maior, e os outros valores são somados com o inicial para fazre uma média, de forma resumida irá pegar os valores que estão a sua volta para servir de média.
 
 ### imprime_arquivo
 A função imprime arquivo usa a saída padrão de dados para criar um novo arquivos com os dados de Header que são passados como parâmetro, e após a impressão ele libera o espaço que foi alocado para ``Header->pixel_img``.
